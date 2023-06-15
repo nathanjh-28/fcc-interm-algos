@@ -5,9 +5,20 @@ Note: You can return the array with its elements in any order.
 */
 
 function diffArray(arr1, arr2) {
-    const newArr = [];
-    return newArr;
+    const newArr = arr1.concat(arr2);
+    newArr.sort()
+    let result = [];
+    console.log(newArr)
+    for (let i = 0; i < newArr.length; i += 2) {
+        console.log(newArr[i], newArr[i + 1])
+        if (newArr[i] != newArr[i + 1]) {
+            result.push(newArr[i]);
+            i--;
+        }
+    }
+    return result;
 }
 
-diffArray([1, 2, 3, 5], [1, 2, 3, 4, 5]);
-diffArray(["diorite", "andesite", "grass", "dirt", "pink wool", "dead shrub"], ["diorite", "andesite", "grass", "dirt", "dead shrub"]); //["pink wool"]
+console.log(diffArray([1, 2, 3, 5], [1, 2, 3, 4, 5]));
+
+console.log(diffArray([1, "calf", 3, "piglet"], [7, "filly"]))
