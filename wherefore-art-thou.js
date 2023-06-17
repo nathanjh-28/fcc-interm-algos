@@ -7,7 +7,39 @@ For example, if the first argument is [{ first: "Romeo", last: "Montague" }, { f
 */
 
 function whatIsInAName(collection, source) {
+    const sKeys = Object.keys(source);
+    let j = 0;
+    const newArr = collection.filter(item => {
+        for (let i = 0; i < sKeys.length; i++) {
+            if (item.hasOwnProperty(sKeys[i])) {
+                if (item[sKeys[i]] === source[sKeys[i]]) j++
+            }
+        }
+        if (j === sKeys.length) {
+            j = 0;
+            return true
+        } else {
+            j = 0;
+            return false;
+        }
 
+    })
+    return newArr;
 }
 
-whatIsInAName([{ first: "Romeo", last: "Montague" }, { first: "Mercutio", last: null }, { first: "Tybalt", last: "Capulet" }], { last: "Capulet" });
+console.log(whatIsInAName([{ first: "Romeo", last: "Montague" }, { first: "Mercutio", last: null }, { first: "Tybalt", last: "Capulet" }], { last: "Capulet" }));
+
+console.log(whatIsInAName([{
+    "apple": 1,
+    "bat": 2
+}, {
+    "bat": 2
+}, {
+    "apple": 1,
+    "bat": 2,
+    "cookie": 2
+}], {
+    "apple": 1,
+    "bat": 2
+}))
+  //[{ "apple": 1, "bat": 2 }, { "apple": 1, "bat": 2, "cookie": 2 }]
