@@ -9,7 +9,23 @@ Translate the provided string to Pig Latin. Input strings are guaranteed to be E
 */
 
 function translatePigLatin(str) {
+
+    const vowelRe = /^[aeiou]/
+    const consRe = /^[^aeiou]*/
+
+    if (vowelRe.test(str)) {
+        return str.concat('way')
+    }
+    if (consRe.test(str)) {
+        const preFix = str.match(consRe)
+        //console.log(preFix[0])
+        let fix = str.slice(preFix[0].length)
+        //console.log(fix)
+        return fix + preFix + 'ay'
+    }
+
     return str;
 }
 
-translatePigLatin("consonant");
+console.log(translatePigLatin("consonant"));
+console.log(translatePigLatin("apple"))
