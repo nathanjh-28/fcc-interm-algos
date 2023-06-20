@@ -8,3 +8,16 @@ For example, for the input GCG, return [["G", "C"], ["C","G"], ["G", "C"]]
 
 The character and its pair are paired up in an array, and all the arrays are grouped into one encapsulating array.
 */
+
+function pairElement(str) {
+    const pairs = {
+        'G': 'C',
+        'C': 'G',
+        'T': 'A',
+        'A': 'T'
+    }
+    let newArr = str.split('')
+    return newArr.map(item => [item, pairs[item]])
+
+}
+console.log(pairElement("GCGATA"));
