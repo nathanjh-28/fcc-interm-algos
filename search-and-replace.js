@@ -13,3 +13,18 @@ Note: Preserve the case of the first character in the original word when you are
 
 */
 
+function myReplace(str, before, after) {
+
+    const caps = /^[A-Z]/
+    if (caps.test(before)) {
+        after = after[0].toUpperCase() + after.slice(1)
+    }
+    else {
+        after = after[0].toLowerCase() + after.slice(1)
+    }
+
+    return str.replace(before, after)
+
+}
+
+console.log(myReplace("A quick brown fox jumped over the lazy dog", "jumped", "Leaped"));
