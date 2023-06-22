@@ -6,7 +6,15 @@ Then return the rest of the array once the condition is satisfied, otherwise, ar
 */
 
 function dropElements(arr, func) {
-    return arr;
+    for (let i = 0; i < arr.length; i++) {
+        console.log(arr[i], i, func(arr[i]))
+        if (!func(arr[i])) {
+            arr.shift();
+            i--
+        } else break
+    }
+
+    return arr
 }
 
-dropElements([1, 2, 3], function (n) { return n < 3; });
+console.log(dropElements([0, 1, 0, 1], function (n) { return n === 1; }));
