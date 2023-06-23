@@ -13,3 +13,16 @@ If either argument isn't a valid number, return undefined.
 
 */
 
+function addTogether(...args) {
+    if (typeof args[0] !== 'number') return undefined
+    if (args.length === 2 && typeof args[1] !== 'number') return undefined
+    if (args.length === 2) return args[0] + args[1];
+    return function (num) {
+        if (typeof num !== 'number') return undefined;
+        return num + args[0]
+    }
+
+}
+
+console.log(addTogether(2, 3));
+console.log(addTogether(5)(7));
