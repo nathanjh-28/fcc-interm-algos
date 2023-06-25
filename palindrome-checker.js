@@ -13,7 +13,14 @@ We'll also pass strings with special symbols, such as 2A3*3a2, 2A3 3a2, and 2_A3
  */
 
 function palindrome(str) {
-    return true;
+    str = str.toLowerCase()
+    console.log(str)
+    const arr = str.match(/[a-z0-9]/gi);
+    console.log(arr)
+    for (let i = 0; i < (arr.length / 2); i++) {
+        if (arr[i] !== arr[arr.length - 1 - i]) return false
+    }
+    return true
 }
 
-palindrome("eye");
+console.log(palindrome("_eYe"));
