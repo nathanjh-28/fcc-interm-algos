@@ -1,13 +1,4 @@
-function convertToRoman(num) {
-    if (num === 0 || typeof num !== 'number') return undefined;
-
-
-    return num;
-}
-
-convertToRoman(36);
-
-let romanNumeralObj = {
+const romanNumeralObj = {
     "1": 'I',
     "2": 'II',
     "3": 'III',
@@ -39,6 +30,34 @@ let romanNumeralObj = {
     "2000": 'MM',
     "3000": 'MMM',
 }
+
+function convertToRoman(num) {
+    if (num === 0 || typeof num !== 'number') return undefined;
+    const arr = num.toString().split('')
+    if (arr.length === 1) {
+        arr[0] = romanNumeralObj[arr[0]]
+    }
+    if (arr.length === 2) {
+        arr[1] = romanNumeralObj[arr[1]]
+        arr[0] = romanNumeralObj[arr[0] * 10]
+    }
+    if (arr.length === 3) {
+        arr[2] = romanNumeralObj[arr[2]]
+        arr[1] = romanNumeralObj[arr[1] * 10]
+        arr[0] = romanNumeralObj[arr[0] * 100]
+    }
+    if (arr.length === 4) {
+        arr[3] = romanNumeralObj[arr[3]]
+        arr[2] = romanNumeralObj[arr[2] * 10]
+        arr[1] = romanNumeralObj[arr[1] * 100]
+        arr[0] = romanNumeralObj[arr[0] * 1000]
+    }
+    return arr.join('');
+}
+
+console.log(convertToRoman(1000));
+
+
 
 
 
