@@ -19,101 +19,62 @@ Otherwise, return {status: "OPEN", change: [...]}, with the change due in coins 
  */
 
 
-function checkCashRegister(price, cash, cid) {
-    let changeSum = cash - price;
-    let obj = { status: "OPEN", change: [] };
-    let cidCopy = [...cid];
-
-    //.    ONE HUNDRED
-    if (changeSum !== 0 && changeSum / 100 >= 1) {
-        // condition if there are bills left over in the cash drawer afterwards and return just the amount needed to make change.
-        // how many bills do I need?
-        // Math.floor(changeSum / 100)*100
-        // how many bills do I have?
-        //.   cid[8][1]
-        // If I don't have enough bills how do I print only the number of bills that I have
-        // If I have too many bills how do I print only the bills that I need
-        if (Math.floor(changeSum / 100) * 100 > cid[8][1]) obj.change.push(["ONE HUNDRED", cid[8][1]])
-        if (Math.floor(changeSum / 100) * 100 < cid[8][1]) obj.change.push(["ONE HUNDRED", Math.floor(changeSum / 100) * 100])
-        //cidCopy[8][1] -= cidCopy[8][1] - changeSum
-        changeSum -= Math.floor(changeSum / 100) * 100
-    }
-    //.    TWENTY
-    if (changeSum !== 0 && changeSum / 20 >= 1) {
-        if (Math.floor(changeSum / 20) * 20 > cid[7][1]) obj.change.push(["TWENTY", cid[7][1]])
-        if (Math.floor(changeSum / 20) * 20 < cid[7][1]) obj.change.push(["TWENTY", Math.floor(changeSum / 20) * 20])
-        //cidCopy[7][1] -= cidCopy[7][1] - changeSum
-        changeSum -= Math.floor(changeSum / 20) * 20
-        console.log(changeSum, Math.floor(changeSum / 20) * 20)
-    }
-    //.    TEN
-    if (changeSum !== 0 && changeSum / 10 >= 1) {
-        if (Math.floor(changeSum / 10) * 10 > cid[6][1]) obj.change.push(["TEN", cid[6][1]])
-        if (Math.floor(changeSum / 10) * 10 < cid[6][1]) obj.change.push(["TEN", Math.floor(changeSum / 10) * 10])
-        //cidCopy[6][1] -= cidCopy[6][1] - changeSum
-        changeSum -= Math.floor(changeSum / 10) * 10
-    }
-    //.    FIVE
-    if (changeSum !== 0 && changeSum / 5 >= 1) {
-        if (Math.floor(changeSum / 5) * 5 > cid[5][1]) obj.change.push(["FIVE", cid[5][1]])
-        if (Math.floor(changeSum / 5) * 5 < cid[5][1]) obj.change.push(["FIVE", Math.floor(changeSum / 5) * 5])
-        //cidCopy[5][1] -= cidCopy[5][1] - changeSum
-        changeSum -= Math.floor(changeSum / 5) * 5
-    }
-    //.    ONE
-    if (changeSum !== 0 && changeSum / 1 >= 1) {
-        if (Math.floor(changeSum / 1) * 1 > cid[4][1]) obj.change.push(["ONE", cid[4][1]])
-        if (Math.floor(changeSum / 1) * 1 < cid[4][1]) obj.change.push(["ONE", Math.floor(changeSum / 1) * 1])
-        //cidCopy[4][1] -= cidCopy[4][1] - changeSum
-        changeSum -= Math.floor(changeSum / 1) * 1
-    }
-    //.    QUARTER
-    if (changeSum !== 0 && changeSum / 0.25 >= 1) {
-        if (Math.floor(changeSum / 0.25) * 0.25 > cid[3][1]) obj.change.push(["QUARTER", cid[3][1]])
-        if (Math.floor(changeSum / 0.25) * 0.25 < cid[3][1]) obj.change.push(["QUARTER", Math.floor(changeSum / 0.25) * 0.25])
-        //cidCopy[3][1] -= cidCopy[3][1] - changeSum
-        changeSum -= Math.floor(changeSum / 0.25) * 0.25
-    }
-    //.    DIME
-    if (changeSum !== 0 && changeSum / 0.1 >= 0) {
-        if (Math.floor(changeSum / 0.1) * 0.1 > cid[2][1]) obj.change.push(["DIME", cid[2][1]])
-        if (Math.floor(changeSum / 0.1) * 0.1 < cid[2][1]) obj.change.push(["DIME", Math.floor(changeSum / 0.1) * 0.1])
-        //cidCopy[2][1] -= cidCopy[2][1] - changeSum
-        changeSum -= Math.floor(changeSum / .1) * .1
-    }
-    //.    NICKEL
-    if (changeSum !== 0 && changeSum / 0.05 >= 0) {
-        if (Math.floor(changeSum / 0.05) * 0.05 > cid[1][1]) obj.change.push(["NICKEL", cid[1][1]])
-        if (Math.floor(changeSum / 0.05) * 0.05 < cid[1][1]) obj.change.push(["NICKEL", Math.floor(changeSum / 0.05) * 0.05])
-        //cidCopy[1][1] -= cidCopy[1][1] - changeSum
-        changeSum -= Math.floor(changeSum / 0.05) * 0.05
-    }
-    //.    PENNY
-    if (changeSum !== 0 && changeSum / 0.01 >= 0) {
-        if (Math.floor(changeSum / 0.01) * 0.01 > cid[0][1]) obj.change.push(["PENNY", cid[0][1]])
-        if (Math.floor(changeSum / 0.01) * 0.01 < cid[0][1]) obj.change.push(["PENNY", Math.floor(changeSum / 0.01) * 0.01])
-        //cidCopy[0][1] -= cidCopy[0][1] - changeSum
-        changeSum -= Math.floor(changeSum / .01) * .01
-    }
-
-
-    //if (changeSum > 0) obj = {status: "INSUFFICIENT_FUNDS", change: []}
-    //work on case where its exact change
-    //if(changeSum === 0) obj = {status:"CLOSED", change:cid };
-    return obj;
+function roundToTwo(num) {
+    return +(Math.round(num + "e+2") + "e-2");
 }
 
-//console.log(checkCashRegister(100, 200, [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]]));
+function checkCashRegister(price, cash, cid) {
+    // global variables changeSum is the amount we need to give to the person, and obj has the array of bills and coins
+    let changeSum = cash - price;
+    //let mySum = 0;
+    let obj = { status: "OPEN", change: [] }
 
-//console.log(checkCashRegister(19.5, 20, [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]]))
-// should return {status: "OPEN", change: [["QUARTER", 0.5]]})
+    function handleChange(billUnit, idx, billStr) {
+        // number of these bills or coins in their dollar amount format
+        let dollarAmt = Math.floor(changeSum / billUnit) * billUnit
+        // TEST 1
+        //console.log('bill:',billUnit,'change sum:',changeSum, 'dollar amount:', dollarAmt, 'cash in drawer',cid[idx][1])
+        // if there aren't enough of these bills then we should push the full amount of bills
+        if (dollarAmt >= cid[idx][1]) {
+            obj.change.push([billStr, cid[idx][1]])
+            // update changeSum so that we can keep track of the bills that we have given
+            changeSum = roundToTwo(changeSum - cid[idx][1])
+        }
+        // if there are too many bills we need to just push the amount that we need
+        if (dollarAmt < cid[idx][1]) {
+            obj.change.push([billStr, dollarAmt])
+            // update changeSum so that we can keep track of the bills that we have given
+            changeSum = roundToTwo(changeSum - dollarAmt)
 
-console.log(checkCashRegister(3.26, 100, [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]]))// should return {status: "OPEN", change: [["TWENTY", 60], ["TEN", 20], ["FIVE", 15], ["ONE", 1], ["QUARTER", 0.5], ["DIME", 0.2], ["PENNY", 0.04]]}
+        }
+        //  TEST 2
+        //console.log('bill:',billUnit,'change sum:',changeSum, 'dollar amount:', dollarAmt, obj.change)
+    }
 
-/*
- 
-4.25 in quarters
-.5 in change
- 
- 
-*/
+
+    //    ONE HUNDRED
+    if (changeSum !== 0 && changeSum / 100 >= 1) handleChange(100, 8, 'ONE HUNDRED')
+    //    TWENTY
+    if (changeSum !== 0 && changeSum / 20 >= 1) handleChange(20, 7, 'TWENTY')
+    //    TEN
+    if (changeSum !== 0 && changeSum / 10 >= 1) handleChange(10, 6, 'TEN')
+    //    FIVE
+    if (changeSum !== 0 && changeSum / 5 >= 1) handleChange(5, 5, 'FIVE')
+    //    ONE
+    if (changeSum !== 0 && changeSum / 1 >= 1) handleChange(1, 4, 'ONE')
+    //    QUARTER
+    if (changeSum !== 0 && changeSum / 0.25 >= 1) handleChange(0.25, 3, 'QUARTER')
+    //    DIME
+    if (changeSum !== 0 && changeSum / 0.1 >= 1) handleChange(0.1, 2, 'DIME')
+    //    NICKEL
+    if (changeSum !== 0 && changeSum / 0.05 >= 1) handleChange(0.05, 1, 'NICKEL')
+    //    PENNY
+    if (changeSum !== 0 && changeSum / 0.01 >= 1) handleChange(0.01, 0, 'PENNY')
+
+    if (changeSum === 0) return obj;
+    else return { status: "INSUFFICIENT_FUNDS", change: [] }
+}
+
+console.log(1, checkCashRegister(19.5, 20, [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]])); //{status: "OPEN", change: [["QUARTER", 0.5]]}
+console.log(2, checkCashRegister(3.26, 100, [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]])); // {status: "OPEN", change: [["TWENTY", 60], ["TEN", 20], ["FIVE", 15], ["ONE", 1], ["QUARTER", 0.5], ["DIME", 0.2], ["PENNY", 0.04]]}
+console.log(checkCashRegister(19.5, 20, [["PENNY", 0.01], ["NICKEL", 0], ["DIME", 0], ["QUARTER", 0], ["ONE", 1], ["FIVE", 0], ["TEN", 0], ["TWENTY", 0], ["ONE HUNDRED", 0]]))// should return {status: "INSUFFICIENT_FUNDS", change: []})
